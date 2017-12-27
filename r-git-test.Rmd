@@ -1,6 +1,9 @@
 ---
-title: "R Notebook"
-output: html_notebook
+title: "Initial R Notebook"
+output:
+  html_document:
+    df_print: paged
+    self_contained: no
 ---
 
 This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
@@ -13,12 +16,14 @@ When you save the notebook, an HTML file containing the code and output will be 
 
 The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike *Knit*, *Preview* does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.
 
-```{r}
+```{r Load Packages, message=FALSE, warning=FALSE, include=FALSE, paged.print=FALSE}
   library(httr)
   library(jsonlite)
+  library(reshape2)
+  library(reshapeGUI)
 ```
 
-```{r}
+```{r Load JSON, include=FALSE}
   metrics_raw <- GET("https://api.breadcrumbinsights.com/savedsets/62?token=boHGrFQIGqhzacyJINiK7uBG")
   
   metrics_text <- content(metrics_raw, "text")
@@ -26,7 +31,6 @@ The preview shows you a rendered HTML copy of the contents of the editor. Conseq
   metrics_json <- fromJSON(metrics_text, flatten=TRUE)
 ```
 
-```{r}
+```{r JSON DataFrame, paged.print=TRUE}
   metrics_json
 ```
-
